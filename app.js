@@ -5,6 +5,7 @@ const userRouter = require('./router/userRouter');
 const postRouter = require('./router/postRouter');
 const categoryRouter = require('./router/categoryRouter');
 const authRouter = require('./router/auth');
+const commentRouter = require('./router/commentsRouter');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -15,7 +16,9 @@ app.get('/', (req, res) => {
 
 app.use('/auth', authRouter);
 app.use('/users', userRouter);       
-app.use('/posts', postRouter);       
+app.use('/posts', postRouter);
+app.use('/', commentRouter);       
 app.use('/categories', categoryRouter); 
+
 
 module.exports = app;
