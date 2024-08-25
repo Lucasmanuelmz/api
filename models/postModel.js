@@ -30,8 +30,15 @@ const Post = sequelize.define('Post', {
       key: 'id'
     },
     allowNull: true
+  },
+  commentId: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: 'Comments',
+      key: 'id'
+    },
+    allowNull: true
   }
 });
-
 
 module.exports = Post;
