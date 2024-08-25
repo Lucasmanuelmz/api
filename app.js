@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
 app.use('/auth', authRouter);
 app.use('/users', userRouter);       
 app.use('/posts', postRouter);
-app.use('/', commentRouter);       
+app.use('/posts/:id', commentRouter);       
 app.use('/categories', categoryRouter); 
 
 
