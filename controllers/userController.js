@@ -37,3 +37,20 @@ exports.createUser = (req, res) => {
       return res.status(500).json({ error: 'Erro ao criar o usuário', details: error.message });
     });
 };
+
+exports.getUsers = (req, res) => {
+  User.findAll()
+
+  .then(users => {
+
+    if(!users) {
+      return res.status(404).json({msg: 'Usuarios nao encontrados'})
+    }
+
+    return res.status(200).json({users})
+  })
+
+  .catch(error => {
+    return res.status(500).json({msg: 'Erro ao obter os usuarios', details: error.message})
+  })
+}
