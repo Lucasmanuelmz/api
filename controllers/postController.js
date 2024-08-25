@@ -2,7 +2,7 @@ const slugify = require('slugify');
 const Post = require('../models/postModel');
 
 exports.createPost = (req, res) => {
- const { title, text, categoryId, userId } = req.body;
+ const { title, text, categoryId, userId, commentId } = req.body;
 
  Post.findOne({where: {title: title, text: text}})
 
@@ -14,7 +14,8 @@ exports.createPost = (req, res) => {
         text: text,
         slug: slugify(title),
         categoryId: categoryId,
-        userId: userId
+        userId: userId,
+        commentId: commentId
       })
 
       .then(() => {
@@ -34,4 +35,21 @@ exports.createPost = (req, res) => {
   .catch(error => {
   res.status(500).json({error: 'Erro no servidor ', details: error.message})
   }) 
+};
+
+exports.getPosts = (req, res) => {
+  Post.findAll()
+
+  .then(posts => {
+
+    if(!posts) {
+      return res.status(404).json({msg: 'Posts nao encontrados'})
+    }
+
+    return res.status(200).json({posts})
+  })
+
+  .catch(error => {
+    return res.status(500).json({msg: 'Erro ao obter os artigos', details: error.message})
+  })
 }
