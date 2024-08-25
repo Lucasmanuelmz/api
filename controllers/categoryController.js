@@ -8,6 +8,7 @@ exports.createCategory = (req, res) => {
  Category.findOne({ where: { name: name } })
 
   .then(category => {
+
     if(!category) {
       console.log('Categoria criada: ',name)
       Category.create({
@@ -34,4 +35,21 @@ exports.createCategory = (req, res) => {
   .catch(error => {
   res.status(500).json({error: 'Erro no servidor ', details: error.message})
   }) 
+};
+
+exports.getCategories = (req, res) => {
+  Category.findAll()
+
+  .then(categories => {
+
+    if(!categories) {
+      return res.status(404).json({msg: 'Nao encontramos categorias'})
+    }
+
+    return res.status(200).json({categories})
+  })
+
+  .catch(error => {
+    return res.status(500).json({msg: 'Erro ao obter as categorias', details: error.message})
+  })
 }
