@@ -53,4 +53,57 @@ exports.getUsers = (req, res) => {
   .catch(error => {
     return res.status(500).json({msg: 'Erro ao obter os usuarios', details: error.message})
   })
+};
+
+exports.getUserById = (req, res) => {
+  const id = req.params.id;
+
+  User.findByPk(id)
+
+  .then(user => {
+
+    if(!user) {
+      return res.status(404).json({msg: 'Usuario nao encontrado'})
+    }
+
+    return res.status(200).json({user})
+  })
+
+  .catch(error => {
+    return res.status(500).json({msg: 'Erro ao obter o usuario', details: error.message})
+  })
 }
+
+exports.updateUserById = (req, res) => {
+  const { id, firstname, lastname, email, password } = req.body;
+
+  User.update({
+    firstname: firstname,
+    lastname: lastname,
+    email: email,
+  }, 
+{ where: { id: id } })
+
+.then(() => {
+  res.status(201).json({msg: 'Usuario atualizado com sucesso'})
+}) 
+
+.catch(error => {
+  res.status(500).json({msg: 'Erro ao atualizar o usuario'})
+})
+};
+
+exports.deleteUserById = (req, res) => {
+  const id = req.params.id;
+
+  User.destroy({where: {id: id } })
+
+.then(() => {
+  res.status(204).json({msg: 'Usuario destruido com sucesso'})
+}) 
+
+.catch(error => {
+  res.status(500).json({msg: 'Erro ao apagar o usuario'})
+})
+};
+

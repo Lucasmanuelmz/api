@@ -15,10 +15,10 @@ app.get('/', (req, res) => {
 });
 
 app.use('/auth', authRouter);
-app.use('/users', userRouter);       
-app.use('/posts', postRouter);
-app.use('/posts/:id', commentRouter);       
-app.use('/categories', categoryRouter); 
+app.use('/api', userRouter);       
+app.use('/api', postRouter);
+app.use('/api/posts/:id', commentRouter);       
+app.use('api/posts', categoryRouter); 
 
 
 module.exports = app;
