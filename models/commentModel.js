@@ -1,4 +1,6 @@
 const { sequelize, DataTypes } = require('../db/db');
+const Post = require('./postModel');
+const User = require('./userModels');
 
 const Comment = sequelize.define('Comment',
   {
@@ -6,25 +8,13 @@ const Comment = sequelize.define('Comment',
       type: DataTypes.TEXT,
       allowNull: false
     },
-    postId: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'Posts',
-        key: 'id'
-      },
-      allowNull: false
-    },
-    userId: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'Users',
-        key: 'id'
-      },
-      allowNull: false
-    }
   }
 )
+Comment.belongsTo(Post)
+Post.hasMany(Comment)
 
-Comment.sync({force: true});
+Comment.belongsTo(User)
+User.hasMany(Comment)
+Comment.sync({alter: true});
 
 module.exports = Comment;

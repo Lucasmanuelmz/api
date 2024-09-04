@@ -1,5 +1,4 @@
 const { sequelize, DataTypes } = require('../db/db');
-const Category = require('./categoryModel')
 
 const User = sequelize.define('User', {
   firstname: {
@@ -19,8 +18,5 @@ const User = sequelize.define('User', {
     allowNull: false
   }
 });
-
-User.hasMany(Category);
-Category.belongsTo(User);
 
 module.exports = User;

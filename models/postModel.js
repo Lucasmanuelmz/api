@@ -8,37 +8,28 @@ const Post = sequelize.define('Post', {
     allowNull: false
   },
   text: {
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT,
     allowNull: false
   },
   slug: {
     type: DataTypes.STRING,
     allowNull: false
   },
-  categoryId: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Category,
-      key: 'id'
-    },
-    allowNull: false  // Agora é obrigatório
+  imageUrl: {
+   type: DataTypes.STRING(500),
+   allowNull: false
   },
-  userId: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: User,
-      key: 'id'
-    },
-    allowNull: true
+  sinopse: {
+   type: DataTypes.STRING(500),
+   allowNull: false
   },
-  commentId: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: 'Comments',
-      key: 'id'
-    },
-    allowNull: true
-  }
 });
 
+Post.belongsTo(Category);
+Category.hasMany(Post);
+
+Post.belongsTo(User);
+User.hasMany(Post);
+
+Post.sync({alter: true})
 module.exports = Post;

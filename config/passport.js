@@ -9,20 +9,26 @@ require('dotenv').config();
 passport.use(new LocalStrategy(
   { usernameField: 'email' },
   (email, password, done) => {
+   
     User.findOne({ where: { email: email } })
-      .then(user => {
+    
+      .then(user => { 
+        
         if (!user) {
           return done(null, false, { message: 'Usuário não encontrado.' });
         }
-
+        
         bcrypt.compare(password, user.password, (err, isMatch) => {
+          
           if (err) throw err;
           if (isMatch) {
+      
             return done(null, user);
           } else {
             return done(null, false, { message: 'Senha incorreta.' });
           }
         });
+      
       })
       .catch(err => done(err));
   }

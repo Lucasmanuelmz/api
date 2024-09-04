@@ -1,9 +1,13 @@
 const bcrypt = require('bcryptjs');
 const User = require('../models/userModels');
+const {validationResult} = require('express-validator');
 
 exports.createUser = (req, res) => {
+  const errors = validationResult(req);
+  if(!errors.isEmpty()) {
+   return res.status(400).json({errors: errors.array()})
+  }
   const { firstname, lastname, email, password } = req.body;
-  console.log('Dados recebidos:', { firstname, lastname, email, password });
 
   User.findOne({ where: { email: email } })
 
@@ -75,7 +79,11 @@ exports.getUserById = (req, res) => {
 }
 
 exports.updateUserById = (req, res) => {
-  const { id, firstname, lastname, email, password } = req.body;
+  const errors = validationResult(req);
+  if(!errors.isEmpty()) {
+    return res.status(400).json({errors: errors.array()})
+  }
+  const { id, firstname, lastname, email } = req.body;
 
   User.update({
     firstname: firstname,

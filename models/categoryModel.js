@@ -1,4 +1,5 @@
 const { sequelize, DataTypes } = require('../db/db');
+const Post = require('./postModel');
 
 const Category = sequelize.define('Category', {
   name: {
@@ -9,13 +10,12 @@ const Category = sequelize.define('Category', {
     type: DataTypes.STRING,
     allowNull: false
   },
-  UserId: {
+  position: {
     type: DataTypes.INTEGER,
-    references: {
-      model: 'Users',
-      key: 'id'
-    }
-  }
+    allowNull: false
+  },
+},{
+  tableName: 'Categories'
 });
 
 module.exports = Category;

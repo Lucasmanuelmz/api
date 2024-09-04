@@ -1,14 +1,19 @@
+const { validationResult } = require('express-validator');
 const Comment = require('../models/commentModel');
 const Post = require('../models/postModel');
 
 
 exports.createComments = (req, res) => {
+  const errors = validationResult(req);
+  if(!errors.isEmpty()) {
+    return res.status(400).json({errors: errors.array()})
+  }
   const { comment, postId, userId } = req.body;
 
   Comment.create({
-    comment,
-    postId,
-    userId
+    comment: comment,
+    PostId: postId,
+    UserId: userId
   })
 
   .then(() => {
@@ -52,12 +57,16 @@ exports.getComments = (req, res) => {
 }
 
 exports.updateCommentsById = (req, res) => {
+  const errors = validationResult(req);
+  if(!errors.isEmpty()) {
+    return res.status(400).json({errors: errors.array()})
+  }
   const {comment, postId, userId, id} = req.body;
 
   Comment.update({
     comment: comment, 
-    postId: postId,
-    userId: userId
+    PostId: postId,
+    UserId: userId
   },
 
 { where: { id: id } })

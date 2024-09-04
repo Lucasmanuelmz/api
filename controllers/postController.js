@@ -1,21 +1,32 @@
 const slugify = require('slugify');
 const Post = require('../models/postModel');
+const { validationResult } = require('express-validator');
+const Port = process.env.PORT;
 
 exports.createPost = (req, res) => {
- const { title, text, categoryId, userId, commentId } = req.body;
+  const errors = validationResult(req);
+  if(!errors.isEmpty()) {
+    return res.status(400).json({errors: errors.array()});
+  }
+  
+  const imageUrl = req.file? `http://localhost:${Port}/uploads/${req.file.filename}`: null;
+ const { title, text, sinopse, categoryId, userId } = req.body;
+
+if(title && sinopse && text && parseInt(categoryId) && parseInt(userId)) {
 
  Post.findOne({where: {title: title, text: text}})
 
   .then((post => {
     if(!post) {
-
+      
       Post.create({
         title: title,
+        sinopse: sinopse, 
+        imageUrl: imageUrl,
         text: text,
         slug: slugify(title),
-        categoryId: categoryId,
-        userId: userId,
-        commentId: commentId
+        CategoryId: categoryId,
+        UserId: userId,
       })
 
       .then(() => {
@@ -34,7 +45,8 @@ exports.createPost = (req, res) => {
 
   .catch(error => {
   res.status(500).json({error: 'Erro no servidor ', details: error.message})
-  }) 
+  })
+  } 
 };
 
 exports.getPosts = (req, res) => {
@@ -57,7 +69,7 @@ exports.getPosts = (req, res) => {
 exports.getPostBySlug = (req, res) => {
   const slug = req.params.slug;
 
-  Post.findOne({whwere: { slug: slug } })
+  Post.findOne({where: { slug: slug } })
 
   .then(post => {
 
@@ -74,9 +86,14 @@ exports.getPostBySlug = (req, res) => {
 };
 
 exports.updatePostById = (req, res) => {
-  const { title, text, categoryId, userId, commentId, id } = req.body;
+  const errors = validationResult(req);
+  if(!errors.isEmpty()) {
+    return res.status(400).json({errors: errors.array()});
+  }
+  const imageUrl = req.file? `http://localhost:${Port}/uploads/${req.file.filename}`: null;
+  const { title, text, sinopse, categoryId, userId, id } = req.body;
  
-  Post.findOne({where: {title: title, text: text}})
+  Post.findOne({where: {title, text}})
  
    .then((post => {
      if(post) {
@@ -85,9 +102,10 @@ exports.updatePostById = (req, res) => {
          title: title,
          text: text,
          slug: slugify(title),
-         categoryId: categoryId,
-         userId: userId,
-         commentId: commentId
+         imageUrl: imageUrl,
+         sinopse: sinopse,
+         CategoryId: categoryId,
+         UserId: userId,
        },
       
        {where: {id: id}}
