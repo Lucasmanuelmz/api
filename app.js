@@ -9,7 +9,8 @@ const categoryRouter = require('./router/categoryRouter');
 const authRouter = require('./router/auth');
 const commentRouter = require('./router/commentsRouter');
 const currentUser = require('./middlewares/currentUser');
-const passport = require('./config/passport')
+const passport = require('./config/passport');
+const sequelize = require('./models/syncronization');
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.urlencoded({ extended: true }));

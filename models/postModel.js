@@ -1,6 +1,4 @@
 const { sequelize, DataTypes } = require('../db/db');
-const Category = require('./categoryModel');
-const User = require('./userModels');
 
 const Post = sequelize.define('Post', {
   title: {
@@ -16,7 +14,7 @@ const Post = sequelize.define('Post', {
     allowNull: false
   },
   imageUrl: {
-   type: DataTypes.STRING(500),
+   type: DataTypes.TEXT,
    allowNull: false
   },
   sinopse: {
@@ -25,11 +23,4 @@ const Post = sequelize.define('Post', {
   },
 });
 
-Post.belongsTo(Category);
-Category.hasMany(Post);
-
-Post.belongsTo(User);
-User.hasMany(Post);
-
-Post.sync({alter: true})
 module.exports = Post;

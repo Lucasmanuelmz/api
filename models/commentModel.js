@@ -1,6 +1,4 @@
 const { sequelize, DataTypes } = require('../db/db');
-const Post = require('./postModel');
-const User = require('./userModels');
 
 const Comment = sequelize.define('Comment',
   {
@@ -10,11 +8,5 @@ const Comment = sequelize.define('Comment',
     },
   }
 )
-Comment.belongsTo(Post)
-Post.hasMany(Comment)
-
-Comment.belongsTo(User)
-User.hasMany(Comment)
-Comment.sync({alter: true});
 
 module.exports = Comment;

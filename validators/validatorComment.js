@@ -2,7 +2,8 @@ const {body} = require('express-validator');
 
 const validationComment = [
   body('comment').trim()
-  .notEmpty().withMessage('Voce nao pode enviar comentario com o campo vazio')
+  .notEmpty().withMessage('Você não pode enviar um comentário vazio.')
+  .isLength({min: 3}).withMessage('O comentário deve ter pelo menos 3 caracteres.')
 ]
 
 module.exports = validationComment;

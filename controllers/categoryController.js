@@ -1,7 +1,7 @@
 const Category = require('../models/categoryModel');
 const slugify = require('slugify');
 const Post = require('../models/postModel');
-const { Op } = require('sequelize');
+const {validationResult} = require('express-validator')
 
 exports.createCategory = (req, res) => {
   const errors = validationResult(req);

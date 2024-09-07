@@ -1,12 +1,15 @@
 const bcrypt = require('bcryptjs');
 const User = require('../models/userModels');
 const {validationResult} = require('express-validator');
+const Port = process.env.PORT || 3000;
+const baseUrl = process.env.BASE_URL || `http://localhost:${Port}`;
 
 exports.createUser = (req, res) => {
   const errors = validationResult(req);
   if(!errors.isEmpty()) {
    return res.status(400).json({errors: errors.array()})
   }
+  const urlAvatar = req.file? `${baseUrl}/uploads/${req.file.filename}`: null;
   const { firstname, lastname, email, password } = req.body;
 
   User.findOne({ where: { email: email } })
@@ -24,6 +27,7 @@ exports.createUser = (req, res) => {
       if (!hashedPassword) throw new Error('Falha ao gerar o hash da senha');
       
       return User.create({
+        urlAvatar,
         firstname,
         lastname,
         email,
@@ -83,21 +87,26 @@ exports.updateUserById = (req, res) => {
   if(!errors.isEmpty()) {
     return res.status(400).json({errors: errors.array()})
   }
-  const { id, firstname, lastname, email } = req.body;
+  const urlAvatar = req.file? `${baseUrl}/uploads/${req.file.filename}`: null;
+  const { id, firstname, lastname, email, birthdate, phone, bio } = req.body;
 
   User.update({
+    urlAvatar,
     firstname: firstname,
     lastname: lastname,
     email: email,
+    birthdate: birthdate,
+    phone: phone,
+    bio: bio
   }, 
 { where: { id: id } })
 
 .then(() => {
-  res.status(201).json({msg: 'Usuario atualizado com sucesso'})
+  return res.status(201).json({msg: 'Usuario atualizado com sucesso'})
 }) 
 
 .catch(error => {
-  res.status(500).json({msg: 'Erro ao atualizar o usuario'})
+  return res.status(500).json({msg: 'Erro ao atualizar o usuario'})
 })
 };
 
@@ -107,11 +116,11 @@ exports.deleteUserById = (req, res) => {
   User.destroy({where: {id: id } })
 
 .then(() => {
-  res.status(204).json({msg: 'Usuario destruido com sucesso'})
+  return res.status(204).json({msg: 'Usuario destruido com sucesso'})
 }) 
 
 .catch(error => {
-  res.status(500).json({msg: 'Erro ao apagar o usuario'})
+ return res.status(500).json({msg: 'Erro ao apagar o usuario'})
 })
 };
 
