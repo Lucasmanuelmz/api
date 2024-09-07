@@ -1,5 +1,4 @@
 const { sequelize, DataTypes } = require('../db/db');
-const Post = require('./postModel');
 
 const Category = sequelize.define('Category', {
   name: {

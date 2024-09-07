@@ -5,6 +5,7 @@ const User = require('../models/userModels');
 const { validationResult } = require('express-validator');
 const Category = require('../models/categoryModel');
 const { Op } = require('sequelize');
+require('dotenv').config();
 const Port = process.env.PORT;
 const baseUrl = process.env.BASE_URL || `http://localhost:${Port}`;
 
