@@ -3,7 +3,8 @@ require('dotenv').config()
 const dbConnectionString = process.env.CONNECTION;
 const sequelize = new Sequelize(dbConnectionString, {
   dialect: 'postgres',
-  timezone: '+02:00'
+  timezone: '+02:00',
+  logging: false
 });
 
 async function connectDB() {
