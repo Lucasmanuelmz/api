@@ -1,20 +1,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
 require('dotenv').config()
-
-const DB_NAME = process.env.DB_NAME;
-const DB_USER = process.env.DB_USER;
-const DB_KEY = process.env.DB_KEY;
-const DB_PORT= process.env.DB_PORT
-
-const sequelize = new Sequelize(
-DB_NAME, DB_USER, DB_KEY, {
-
-host: 'localhost',
-timezone: '+02:00',
-dialect: 'postgres',
-logging: false,
-port: DB_PORT
-});
+const dbConnectionString = process.env.CONNECTION;
+const sequelize = new Sequelize(dbConnectionString);
 
 async function connectDB() {
  
