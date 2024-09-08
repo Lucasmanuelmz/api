@@ -2,8 +2,8 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/userModels');
 const {validationResult} = require('express-validator');
 require('dotenv').config();
-const Port = process.env.PORT || 1234;
-const baseUrl = process.env.BASE_URL || `http://localhost:${Port}`;
+const port = process.env.PORT || 3000;
+const baseUrl = process.env.BASE_URL || `http://localhost:${port}`;
 
 exports.createUser = (req, res) => {
   const errors = validationResult(req);
