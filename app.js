@@ -39,7 +39,14 @@ app.use('/api', categoryRouter);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).send('Algo deu errado!');
+  res.status(500).json({
+    msg: 'Bem vindo a minha API',
+    status:
+      {
+        "message": "API rodando corretamente.",
+        "version": "1.0.0"
+      }
+  });
 });
 
 module.exports = app;
