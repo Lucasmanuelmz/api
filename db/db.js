@@ -1,6 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize');
 require('dotenv').config()
-const dbConnectionString = process.env.CONNECTION;
+const dbConnectionString = process.env.DATABASE_URL;
 const sequelize = new Sequelize(dbConnectionString, {
   dialect: 'postgres',
   timezone: '+02:00',
