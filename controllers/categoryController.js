@@ -31,7 +31,6 @@ exports.createCategory = (req, res) => {
       });
     })
     .catch(error => {
-      console.error('Erro ', error);
       res.status(500).json({ error: 'Erro interno ao buscar a categoria', details: error.message });
     });
 };
@@ -82,9 +81,6 @@ exports.getCategoryBySlug = (req, res) => {
       return res.status(500).json({ msg: 'Erro ao obter a categoria', details: error.message });
     });
 };
-
-
-
 
 exports.updateCategoryById = (req, res) => {
   const errors = validationResult(req);

@@ -1,7 +1,7 @@
 const { body } = require('express-validator');
 
 const validationCategory = [
-  body('categoryName')
+  body('name')
   .matches(/^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/)
   .withMessage('O nome da categoria deve conter apenas letras e espaços')
   .trim()  
