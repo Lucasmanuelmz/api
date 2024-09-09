@@ -6,8 +6,7 @@ const { validationResult } = require('express-validator');
 const Category = require('../models/categoryModel');
 const { Op } = require('sequelize');
 require('dotenv').config();
-const port = process.env.PORT || 3000;
-const baseUrl = process.env.BASE_URL || `http://localhost:${port}`;
+const baseUrl = process.env.BASE_URL || `https://alfacecode.adaptable.app`;
 
 exports.createPost = (req, res) => {
   const errors = validationResult(req);

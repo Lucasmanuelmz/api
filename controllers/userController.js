@@ -2,8 +2,7 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/userModels');
 const {validationResult} = require('express-validator');
 require('dotenv').config();
-const port = process.env.PORT || 3000;
-const baseUrl = process.env.BASE_URL || `http://localhost:${port}`;
+const baseUrl = process.env.BASE_URL || `https://alfacecode.adaptable.app`;
 
 exports.createUser = (req, res) => {
   const errors = validationResult(req);
