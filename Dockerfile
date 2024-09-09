@@ -1,9 +1,9 @@
-FROM node:20
+FROM node:20.14.0
 WORKDIR /app
 COPY package*.json ./
 
-RUN npm install
+RUN npm install --omit=dev
 COPY . .
 EXPOSE 1234
 
-CMD ["npm", "start"]
+CMD ["node", "server.js"]
