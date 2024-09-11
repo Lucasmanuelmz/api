@@ -27,7 +27,14 @@ app.use(cors());
 
 
 app.get('/', (req, res) => {
-  res.send('Correto');
+  res.status(200).json({
+    msg: 'Bem vindo a minha API',
+    status:
+      {
+        "message": "API rodando corretamente.",
+        "version": "1.0.0"
+      }
+  })
 });
 
 app.use('/api/current-user', passport.authenticate('jwt', { session: false }), currentUser.currentUser);
@@ -39,15 +46,7 @@ app.use('/api/posts/:id', commentRouter);
 app.use('/api', categoryRouter); 
 
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({
-    msg: 'Bem vindo a minha API',
-    status:
-      {
-        "message": "API rodando corretamente.",
-        "version": "1.0.0"
-      }
-  });
+  res.status(500).json({msg: 'Ocorreu u erro ao carregar a pagina'});
 });
 
 module.exports = app;
