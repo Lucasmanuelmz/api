@@ -17,6 +17,10 @@ app.use(helmet({
   crossOriginResourcePolicy: { policy: "cross-origin" }, 
   crossOriginOpenerPolicy: { policy: "same-origin" }  
 }));
+app.use((req, res, next) => {
+  res.setHeader('Cache-Control', 'no-store');
+  next();
+});
 app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); 
 app.use(express.urlencoded({ extended: true })); 
 app.use(express.json()); 
