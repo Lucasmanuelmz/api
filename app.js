@@ -13,10 +13,7 @@ const currentUser = require('./middlewares/currentUser');
 const passport = require('./config/passport');
 const sequelize = require('./models/syncronization');
 
-app.use(helmet({
-  crossOriginResourcePolicy: { policy: "cross-origin" }, 
-  crossOriginOpenerPolicy: { policy: "same-origin" }  
-}));
+app.use(helmet());
 app.use((req, res, next) => {
   res.setHeader('Cache-Control', 'no-store');
   next();
