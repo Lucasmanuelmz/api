@@ -1,13 +1,13 @@
 const { associateModels } = require('./associate');
 associateModels();
-const { sequelize } = require('../db/db')
+const { sequelize } = require('../db/db');
 
-sequelize.sync({alter: true})
+sequelize.sync()
 .then(() => {
-  console.log('Os Modelos foram alterados com sucesso!')
+  res.status(200).json({ms: 'Db sincronizado com sucesso!'})
 })
-.catch((error) => {
-  console.log('Nao foi possivel sincronizar os models ', {details: error.message})
+.catch(error => {
+  res.status(400).json({ms: 'A sincronizacao de Db falhou. ',details: error.message})
 })
 
 module.exports = sequelize;
